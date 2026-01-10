@@ -1,61 +1,58 @@
 pipeline {
-    agent {
-        docker {
-            image 'your-dockerhub-username/jenkins-maven-docker:latest'
-            args '-u root:root' // optional if you need root permissions
-        }
+    agent any
+
+    tools {
+        maven 'Maven-3.9.9'     // Nom configuré dans Jenkins > Global Tool Configuration
+        jdk 'JDK-17'
     }
 
     environment {
-        WORKSPACE_DIR = '/home/jenkins/workspace'
+        APP_NAME = "my-java-app"
     }
 
     stages {
+
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'master',
+                    url: 'https://github.com/isoulemane/01-2026-CI-Butterfly-take-off.git'
             }
         }
 
-        stage('Maven Build') {
+        stage('Clean') {
             steps {
-                script {
-                    if (fileExists('pom.xml')) {
-                        echo "Maven project found. Running mvn package..."
-                        sh 'mvn clean package'
-                    } else {
-                        echo "No Maven project detected. Skipping Maven build."
-                    }
-                }
+                sh 'mvn clean'
             }
         }
 
-        stage('Run Scripts') {
+        stage('Build') {
             steps {
-                script {
-                    def scripts = findFiles(glob: '*.sh')
-                    if (scripts.length == 0) {
-                        echo "No shell scripts found."
-                    } else {
-                        scripts.each { s ->
-                            sh "chmod +x ${s.name}"
-                            sh "./${s.name}"
-                        }
-                    }
-                }
+                sh 'mvn package -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Archive Artifact') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
     }
 
     post {
-        always {
-            echo "Pipeline finished!"
-        }
         success {
-            echo "Pipeline succeeded!"
+            echo '✅ Build completed successfully'
         }
         failure {
-            echo "Pipeline failed. Check console output."
+            echo '❌ Build failed'
+        }
+        always {
+            cleanWs()
         }
     }
 }
