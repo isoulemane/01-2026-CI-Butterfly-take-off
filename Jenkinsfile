@@ -2,20 +2,20 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven-3.9.9'     // Nom configuré dans Jenkins > Global Tool Configuration
-        jdk 'JDK-17'
+        maven 'cimaven'     // Nom exact configuré dans Jenkins
+        jdk 'ci-java'       // Nom exact configuré dans Jenkins
     }
 
     environment {
-        APP_NAME = "my-java-app"
+        APP_NAME = "ci-java-app"
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                git branch: 'master',
-                    url: 'https://github.com/isoulemane/01-2026-CI-Butterfly-take-off.git'
+                git branch: 'main',
+                    url: 'https://github.com/isoulemane/your-repo-name.git'
             }
         }
 
@@ -56,4 +56,3 @@ pipeline {
         }
     }
 }
-
