@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        maven 'cimaven'     // Nom exact configuré dans Jenkins
-        jdk 'ci-java'       // Nom exact configuré dans Jenkins
+        maven 'cimaven'
+        jdk 'cijava'
     }
 
     environment {
@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/isoulemane/your-repo-name.git'
+                    url: 'https://github.com/isoulemane/01-2026-CI-Butterfly-take-off.git'
             }
         }
 
