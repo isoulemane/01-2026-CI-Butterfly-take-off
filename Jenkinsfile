@@ -6,15 +6,11 @@ pipeline {
         jdk 'cijava'
     }
 
-    environment {
-        APP_NAME = "ci-java-app"
-    }
-
     stages {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
+                git branch: 'master',
                     url: 'https://github.com/isoulemane/01-2026-CI-Butterfly-take-off.git'
             }
         }
@@ -45,11 +41,11 @@ pipeline {
     }
 
     post {
-        success {
-            echo '✅ Build completed successfully'
-        }
         failure {
             echo '❌ Build failed'
+        }
+        success {
+            echo '✅ Build successful'
         }
         always {
             cleanWs()
