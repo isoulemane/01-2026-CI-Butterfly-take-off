@@ -8,6 +8,6 @@
     <groupId>com.example</groupId>
     <artifactId>my-webapp</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>  <!-- or war if needed -->
+    <packaging>war</packaging>  <!-- or war if needed -->
 
 </project>
