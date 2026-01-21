@@ -8,6 +8,20 @@
     <groupId>com.example</groupId>
     <artifactId>my-webapp</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>  <!-- or war if needed -->
+    <packaging>war</packaging>
+
+    <build>
+        <plugins>
+            <!-- Fix for missing web.xml -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
