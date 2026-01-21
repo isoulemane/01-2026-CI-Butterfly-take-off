@@ -11,13 +11,16 @@
     <packaging>war</packaging>
 
     <build>
+        <!-- This controls the WAR file name -->
+        <finalName>webapp</finalName>
+
         <plugins>
-            <!-- Fix for missing web.xml -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.4.0</version>
                 <configuration>
+                    <!-- Allows WAR without web.xml -->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
