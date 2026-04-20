@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "=== EC2 Instances ==="
+aws ec2 describe-instances --query "Reservations[*].Instances[*].InstanceId" --output text
+
+echo "=== S3 Buckets ==="
+aws s3 ls
+
+echo "=== IAM Users ==="
+aws iam list-users --query "Users[*].UserName" --output text
+
+echo "=== RDS Instances ==="
+aws rds describe-db-instances --query "DBInstances[*].DBInstanceIdentifier" --output text
+
+echo "=== ECS Clusters ==="
+aws ecs list-clusters --output text
